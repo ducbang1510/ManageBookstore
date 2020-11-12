@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <h1 class="text-center">Quản lý nhà sách</h1>
+    <ul>
+        <li><a href="#"> Tất cả </a></li>
+        {% for cat in categories %}
+        <li><a href="#"> Category </a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
