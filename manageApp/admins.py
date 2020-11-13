@@ -30,3 +30,4 @@ class LogOutView(BaseView):
 # admin.add_view(ModelView(Category, db.session))
 # admin.add_view(ModelView(Product, db.session))
 admin.add_view(ContactView(name='Liên hệ'))
+admin.add_view(LogOutView(name="Đăng xuất"))
