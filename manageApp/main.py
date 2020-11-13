@@ -25,6 +25,11 @@ def login_admin():
     return redirect("/admin")
 
 
+@app.route("/register")
+def register():
+    return render_template("admin/register.html")
+
+
 @login.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

@@ -9725,13 +9725,12 @@ ul {
   top: 0px;
   width: 100%;
   height: 55px;
-  display: none !important;
+  display: none;
   justify-content: center;
   align-items: center;
   padding: 10px 15px;
   z-index: 9990;
   background: #000;
-  opacity: 0;
   color: #ffffff; }
   .item-purchase-banner .banner-text {
     margin-bottom: 0;
