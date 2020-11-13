@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Boolean, Date, Enum
 from sqlalchemy.orm import relationship
-from flask_login import UserMixin, current_user, logout_user
+from flask_login import UserMixin
 from datetime import datetime
 from enum import Enum as UserEnum
-from manageApp import db, admin
+from manageApp import db
 
 
 class SaleBase(db.Model):
@@ -16,23 +16,66 @@ class SaleBase(db.Model):
         return self.name
 
 
-# class Category(SaleBase):
-#     __tablename__ = 'category'
-#
-#     products = relationship('Product',
-#                             backref='category',
-#                             lazy=True)
-#
-#
-# class Product(SaleBase):
-#     __tablename__ = 'product'
-#
-#     description = Column(String(255))
-#     image = Column(String(255))
-#     price = Column(Float, default=0)
-#     category_id = Column(Integer,
-#                          ForeignKey(Category.id),
-#                          nullable=False)
+#Bảng thể loại
+class Category(SaleBase):
+    __tablename__ = 'category'
+
+    books = relationship('Book', secondary='bookcate')
+
+
+#Bảng sách
+class Book(SaleBase):
+    __tablename__ = 'book'
+
+    description = Column(String(255))
+    image = Column(String(255))
+    price = Column(Float, default=0)
+    categories = relationship('Category', secondary='bookcate')
+    authors = relationship('Author', secondary='bookauthor')
+    invenReports = relationship('InventoryReport', secondary='detailInventoryReport')
+
+
+#Bảng tác giả
+class Author(SaleBase):
+    __tablename__ = 'author'
+
+    books = relationship('Book', secondary='bookauthor')
+
+
+#Bảng báo cáo tồn
+class InventoryReport(db.Model):
+    __tablename__ = 'inventoryReport'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    report_date = Column(Date, default=datetime.now())
+    books = relationship('Book', secondary='detailInventoryReport')
+
+
+#Bảng sách-thể loại
+class BookCate(db.Model):
+    __tablename__ = 'bookcate'
+
+    book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
+    category_id = Column(Integer, ForeignKey('category.id'), primary_key=True)
+
+
+#Bảng sách-tác giả
+class BookAuthor(db.Model):
+    __tablename__ = 'bookauthor'
+
+    book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
+    author_id = Column(Integer, ForeignKey('author.id'), primary_key=True)
+
+
+#Bảng chi tiết báo cáo tồn
+class DetailInventoryReport(db.Model):
+    __tablename__ = 'detailInventoryReport'
+
+    report_id = Column(Integer, ForeignKey('inventoryReport.id'), primary_key=True)
+    book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
+    quantity_at_first = Column(Integer, default=0)
+    quantity_at_the_end = Column(Integer, default=0)
+    arise = Column(String(255))
 
 
 class UserRole(UserEnum):
@@ -40,6 +83,7 @@ class UserRole(UserEnum):
     ADMIN = 2
 
 
+#Bảng user
 class User(SaleBase, UserMixin):
     __tablename__ = 'user'
 
