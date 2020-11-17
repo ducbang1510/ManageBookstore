@@ -430,8 +430,9 @@ CREATE TABLE `user` (
   `joined_date` date DEFAULT NULL,
   `user_role` enum('USER','ADMIN') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
   CONSTRAINT `user_chk_1` CHECK ((`active` in (0,1)))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +441,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Tran Duc Bang',NULL,'admin','e10adc3949ba59abbe56e057f20f883e',NULL,1,NULL,'USER');
+INSERT INTO `user` VALUES (1,'Tran Duc Bang',NULL,'admin','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-14','USER'),(2,'Tin',NULL,'Tin123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-16','USER'),(8,'Tran Trong Tin','','tin234','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER'),(9,'Khoa','','khoa123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-17','USER'),(10,'Tran Van A','','user123','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -453,4 +454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-14 21:48:50
+-- Dump completed on 2020-11-17 16:16:36

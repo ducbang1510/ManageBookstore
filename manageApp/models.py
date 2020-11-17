@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Boolean, Date, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from flask_login import UserMixin
 from datetime import datetime
 from enum import Enum as UserEnum
@@ -35,11 +35,8 @@ class Book(SaleBase):
     description = Column(String(255))
     image = Column(String(255))
     price = Column(Float, default=0)
-    categories = relationship('Category', secondary='book_cate')
-    authors = relationship('Author', secondary='book_author')
-    invenReports = relationship('InventoryReport', secondary='detail_inventory_report')
-    invoices = relationship('Invoice', secondary='detail_invoice')
-    receivedNotes = relationship('ReceivedNote', secondary='detail_received_note')
+    categories = relationship('Category', secondary='book_cate', lazy='subquery', backref=backref('books', lazy=True))
+    authors = relationship('Author', secondary='book_author', lazy='subquery', backref=backref('books', lazy=True))
 
 
 #Bảng thể loại
@@ -47,7 +44,6 @@ class Category(SaleBase):
     __tablename__ = 'category'
 
     name = Column(String(50), nullable=False)
-    books = relationship('Book', secondary='book_cate')
 
 
 #Bảng tác giả
@@ -55,7 +51,6 @@ class Author(SaleBase):
     __tablename__ = 'author'
 
     name = Column(String(50), nullable=False)
-    books = relationship('Book', secondary='book_author')
 
 
 #Bảng hóa đơn
@@ -173,7 +168,7 @@ class User(SaleBase, UserMixin):
 
     name = Column(String(50), nullable=False)
     email = Column(String(50), nullable=True)
-    username = Column(String(100), nullable=False)
+    username = Column(String(100), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
     avatar = Column(String(100))
     active = Column(Boolean, default=True)

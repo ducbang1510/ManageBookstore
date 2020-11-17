@@ -9,10 +9,7 @@
 <body>
     <h1 class="text-center">Quản lý nhà sách</h1>
     <ul>
-        <li><a href="#"> Tất cả </a></li>
-        {% for cat in categories %}
-        <li><a href="#"> Category </a></li>
-        {% endfor %}
+        <li><a href="{{ url_for('login_admin') }}"> Tất cả </a></li>
     </ul>
 </body>
 </html>
