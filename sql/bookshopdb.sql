@@ -26,7 +26,7 @@ CREATE TABLE `author` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +35,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
+INSERT INTO `author` VALUES (1,'Thomas Harris'),(2,'Higashino Keigo'),(3,'Haruki Murakami'),(4,'Masashi Kishimoto'),(5,'Jeffrey Archer'),(6,'Sir Arthur Conan Doyle'),(7,'Agatha Christie'),(8,'Nguyễn Nhật Ánh'),(9,'Fumiyo Kono'),(10,'Maita Yohei'),(11,'Bộ Giáo Dục Và Đào Tạo'),(12,'Gosho Aoyama');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +53,7 @@ CREATE TABLE `book` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,6 +62,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES (1,'Sự Im Lặng Của Bầy Cừu','Bìa mềm','assets/img/book_img/img6.jpg',115000),(2,'Án Mạng Mười Một Chữ','Bìa mềm','assets/img/book_img/img8.jpg',110000),(3,'Rừng Nauy (Tái Bản 2018)','Bìa mềm','assets/img/book_img/img1.jpg',128000),(4,'Naruto Tập 43','Bìa mềm','assets/img/book_img/img12.jpg',22000),(5,'Hai Số Phận','Bìa Cứng','assets/img/book_img/img4.jpg',175000),(6,'Sherlock Holmes (Trọn Bộ 3 Cuốn)','Bìa mềm','assets/img/book_img/img7.jpg',345000),(7,'Án Mạng Trên Chuyến Tàu Tốc Hành Phương Đông','Bìa mềm','assets/img/book_img/img2.jpg',110000),(8,'Tôi Thấy Hoa Vàng Trên Cỏ Xanh','Bìa mềm','assets/img/book_img/img5.jpg',125000),(9,'Mắt Biếc','Bìa mềm','assets/img/book_img/img11.jpg',110000),(10,'Ở Một Góc Nhân Gian','Bìa mềm','assets/img/book_img/img13.jpg',80000),(11,'Toán 2','Bìa mềm','assets/img/book_img/img9.jpg',13000),(12,'Sách Giáo Khoa Bộ Lớp 9 (Bộ 12 Cuốn)','Bìa mềm','assets/img/book_img/img10.jpg',136000),(13,'Thám Tử Lừng Danh Conan - Tập 97','Bìa mềm','assets/img/book_img/img3.jpg',20000);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,6 +89,7 @@ CREATE TABLE `book_author` (
 
 LOCK TABLES `book_author` WRITE;
 /*!40000 ALTER TABLE `book_author` DISABLE KEYS */;
+INSERT INTO `book_author` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,8),(10,9),(10,10),(11,11),(12,11),(13,12);
 /*!40000 ALTER TABLE `book_author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +116,34 @@ CREATE TABLE `book_cate` (
 
 LOCK TABLES `book_cate` WRITE;
 /*!40000 ALTER TABLE `book_cate` DISABLE KEYS */;
+INSERT INTO `book_cate` VALUES (3,1),(8,1),(9,1),(10,1),(1,4),(2,4),(6,4),(7,4),(4,6),(13,6),(11,7),(12,7),(5,9);
 /*!40000 ALTER TABLE `book_cate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book_image`
+--
+
+DROP TABLE IF EXISTS `book_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_image` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `book_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `book_id` (`book_id`),
+  CONSTRAINT `book_image_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_image`
+--
+
+LOCK TABLES `book_image` WRITE;
+/*!40000 ALTER TABLE `book_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `book_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -127,7 +157,7 @@ CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,6 +166,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Tiểu thuyết'),(2,'Truyện ngắn'),(3,'Light Novel'),(4,'Truyện trinh thám'),(5,'Truyện kiếm hiệp'),(6,'Manga - Comic'),(7,'Sách giáo khoa'),(8,'Sách tham khảo'),(9,'Tác phẩm kinh điển');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -432,7 +463,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   CONSTRAINT `user_chk_1` CHECK ((`active` in (0,1)))
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -441,7 +472,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Tran Duc Bang',NULL,'admin','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-14','USER'),(2,'Tin',NULL,'Tin123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-16','USER'),(8,'Tran Trong Tin','','tin234','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER'),(9,'Khoa','','khoa123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-17','USER'),(10,'Tran Van A','','user123','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER');
+INSERT INTO `user` VALUES (1,'Tran Duc Bang',NULL,'admin','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-14','USER'),(2,'Tin',NULL,'Tin123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-16','USER'),(8,'Tran Trong Tin','','tin234','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER'),(9,'Khoa','','khoa123','e10adc3949ba59abbe56e057f20f883e',NULL,1,'2020-11-17','USER'),(10,'Tran Van A','','user123','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2020-11-17','USER'),(11,'Nguyen Van B','','user1','827ccb0eea8a706c4c34a16891f84e7b','images/upload/Tin.jpg',1,'2020-11-21','USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -454,4 +485,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-17 16:16:36
+-- Dump completed on 2020-12-01  9:50:30

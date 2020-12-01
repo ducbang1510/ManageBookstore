@@ -37,6 +37,14 @@ class Book(SaleBase):
     price = Column(Float, default=0)
     categories = relationship('Category', secondary='book_cate', lazy='subquery', backref=backref('books', lazy=True))
     authors = relationship('Author', secondary='book_author', lazy='subquery', backref=backref('books', lazy=True))
+    # images = relationship('Bookimage', backref('book'), lazy=True)
+
+
+class Bookimage(SaleBase):
+    __tablename__ = 'book_image'
+
+    image = Column(String(255), nullable=False)
+    book_id = Column(Integer, ForeignKey(Book.id), nullable=False)
 
 
 #Bảng thể loại

@@ -1,17 +1,23 @@
-from flask import render_template, redirect, request
-from flask_login import login_user, login_required
-from sqlalchemy import func
-from sqlalchemy.exc import IntegrityError
-from pymysql.err import IntegrityError
-from manageApp import app, login, db
+from flask import render_template, redirect, request, session, jsonify
+from flask_login import login_user
+from manageApp import app, login, utils
 from manageApp.models import *
 from manageApp.admins import *
-import hashlib
+import hashlib, os
 
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('home/index.html')
+
+
+@app.route("/shop-list")
+def shop_list():
+    books = utils.load_books()
+    categories = utils.load_cate()
+    authors = utils.load_author()
+    return render_template('shop_list.html',
+                           books=books, categories=categories, authors=authors)
 
 
 @app.route("/login-admin", methods=["post", "get"])
@@ -33,39 +39,66 @@ def register_form():
     return render_template("admin/register.html")
 
 
-def load_data_user():
-    users = User.query.all()
-    return users
-
-
-def check_username(username):
-    users = load_data_user()
-    for u in users:
-        if u.username == username:
-            return False
-    return True
-
-
 @app.route("/register", methods=["post", "get"])
 def register():
-    if request.method == "POST":
-        name_dk = request.form.get("name_dk")
-        email_dk = request.form.get("email_dk")
-        username_dk = request.form.get("username_dk")
-        password_dk = request.form.get("password_dk", "")
-        password_dk = str(hashlib.md5(password_dk.strip().encode("utf-8")).hexdigest())
+    err_msg = ''
+    if request.method == 'POST':
+        name = request.form.get('name_dk')
+        email = request.form.get('email_dk')
+        username = request.form.get('username_dk')
+        password = request.form.get('password_dk', '').strip()
+        confirm_password = request.form.get('password-repeat', '').strip()
 
-        if (check_username(username_dk) == True):
-            user = User(name=name_dk, email=email_dk, username=username_dk, password=password_dk)
-            db.session.add(user)
-            db.session.commit()
-            return redirect("/admin")
-    return redirect("register-form")
+        if password == confirm_password:
+            avatar = request.files["avatar"]
+            avatar_path = 'images/upload/%s' % avatar.filename
+            avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'],
+                                     'static/', avatar_path))
+
+            if utils.add_user(name=name, email=email, username=username,
+                              password=password, avatar=avatar_path):
+                return redirect('/admin')
+        else:
+            err_msg = "Mật khẩu KHÔNG khớp!"
+
+    return render_template('admin/register.html', err_msg=err_msg)
 
 
 @login.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+
+@app.route('/api/cart', methods=['get', 'post'])
+def add_to_cart():
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    cart = session['cart']
+
+    data = request.json
+    id = str(data.get('id'))
+    name = data.get('name')
+    price = data.get('price')
+
+    if id in cart: #co san pham trong gio
+        cart[id]['quantity'] = cart[id]['quantity'] + 1
+    else: #chua co san pham trong gio
+        cart[id] = {
+            "id": id,
+            "name": name,
+            "price": price,
+            "quantity": 1
+        }
+
+    session['cart'] = cart
+
+    total_quan, total_amount = utils.cart_stats(cart)
+
+    return jsonify({
+        "total_amount": total_amount,
+        "total_quantity": total_quan
+    })
 
 
 if __name__ == "__main__":

@@ -38,6 +38,15 @@ class CustomerModelView(AuthenticatedView):
     can_delete = False
 
 
+class ChartView(BaseView):
+    @expose('/')
+    def index(self):
+        return self.render('admin/charts.html')
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+
 class ContactView(BaseView):
     @expose('/')
     def index(self):
@@ -58,5 +67,6 @@ admin.add_view(CustomerModelView(Customer, db.session))
 admin.add_view(AuthorModelView(Author, db.session))
 admin.add_view(CategoryModelView(Category, db.session))
 admin.add_view(BookModelView(Book, db.session))
+admin.add_view(ChartView(name='Biểu đồ'))
 admin.add_view(ContactView(name='Liên hệ'))
 admin.add_view(LogOutView(name="Đăng xuất"))
