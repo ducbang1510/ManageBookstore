@@ -11,13 +11,22 @@ def index():
     return render_template('home/index.html')
 
 
-@app.route("/shop-list")
-def shop_list():
-    books = utils.load_books()
+@app.route("/shop-list/<int:page_num>")
+def shop_list(page_num):
     categories = utils.load_cate()
     authors = utils.load_author()
-    return render_template('shop_list.html',
-                           books=books, categories=categories, authors=authors)
+    books = Book.query.paginate(per_page=4, page=page_num, error_out=True)
+    all_pages = books.iter_pages()
+
+    return render_template('shop_list.html', books=books,
+                           categories=categories,
+                           authors=authors,
+                           all_pages=all_pages)
+
+
+@app.route("/book-detail")
+def book_detail():
+    return render_template('book_detail.html')
 
 
 @app.route("/login-admin", methods=["post", "get"])

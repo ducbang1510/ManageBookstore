@@ -463,7 +463,7 @@
                              aria-labelledby="pills-one-example1-tab">
 
                             <ul class="products list-unstyled row no-gutters row-cols-2 row-cols-lg-3 row-cols-wd-4 border-top border-left mb-6">
-                                {% for b in books %}
+                                {% for b in books.items %}
                                     <li class="product col">
                                         <div class="product__inner overflow-hidden p-3 p-md-4d875">
                                             <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
@@ -837,16 +837,22 @@
                             <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
                                                                                     href="#">Previous</a>
                             </li>
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item active" aria-current="page"><a
-                                    class="page-link" href="#">3</a></li>
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a>
-                            </li>
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a>
-                            </li>
+                            {% for page in all_pages %}
+                                {% if page %}
+                                    <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="{{ url_for('shop_list', page_num=page) }}">{{ page }}</a>
+                                    </li>
+                                {% else %}
+                                    ...
+                                {% endif %}
+                            {% endfor %}
+{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a>#}
+{#                            </li>#}
+{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item active" aria-current="page"><a#}
+{#                                    class="page-link" href="#">3</a></li>#}
+{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a>#}
+{#                            </li>#}
+{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a>#}
+{#                            </li>#}
                             <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
                                                                                     href="#">Next</a>
                             </li>

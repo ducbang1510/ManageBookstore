@@ -97,7 +97,7 @@
                     </a>
                 </div>
                 <div class="site-branding pr-md-4">
-                    <a href="index.html" class="d-block mb-1">
+                    <a href="{{ url_for('index') }}" class="d-block mb-1">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="170px"
                              height="30px">
                             <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
@@ -109,7 +109,7 @@
                 </div>
                 <div class="site-navigation mr-auto d-none d-xl-block">
                     <ul class="nav">
-                        <li class="nav-item"><a href="#"
+                        <li class="nav-item"><a href="{{ url_for('index') }}"
                                                 class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">Trang
                             chủ</a></li>
                         <li class="nav-item"><a href="#"
@@ -133,10 +133,10 @@
                             <ul id="shopDropdownMenu"
                                 class="dropdown-unfold dropdown-menu font-size-2 rounded-0 border-gray-900"
                                 aria-labelledby="shopDropdownInvoker">
-                                <li><a href="{{ url_for('shop_list') }}" class="dropdown-item link-black-100">Danh sách
+                                <li><a href="{{ url_for('shop_list', page_num=1) }}" class="dropdown-item link-black-100">Danh sách
                                     sản phẩm</a></li>
                                 <li class="position-relative">
-                                    <a id="shopDropdownsubmenutwoInvoker" href="#"
+                                    <a id="shopDropdownsubmenutwoInvoker" href="{{ url_for('book_detail') }}"
                                        class="dropdown-toggle dropdown-item dropdown-item__sub-menu link-black-100 d-flex align-items-center justify-content-between"
                                        aria-haspopup="true"
                                        aria-expanded="false"
