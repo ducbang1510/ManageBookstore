@@ -834,28 +834,42 @@
 
                     <nav aria-label="Page navigation example">
                         <ul class="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
-                                                                                    href="#">Previous</a>
-                            </li>
+                            {% if books.has_prev %}
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
+                                                                                        href="{{ url_for('shop_list', page_num=books.prev_num) }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
+                                                                                        href="#">Previous</a>
+                                </li>
+                            {% endif %}
+
                             {% for page in all_pages %}
                                 {% if page %}
-                                    <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="{{ url_for('shop_list', page_num=page) }}">{{ page }}</a>
+                                    <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
+                                                                                            href="{{ url_for('shop_list', page_num=page) }}">{{ page }}</a>
                                     </li>
                                 {% else %}
                                     ...
                                 {% endif %}
                             {% endfor %}
-{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a>#}
-{#                            </li>#}
-{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item active" aria-current="page"><a#}
-{#                                    class="page-link" href="#">3</a></li>#}
-{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a>#}
-{#                            </li>#}
-{#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a>#}
-{#                            </li>#}
-                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
-                                                                                    href="#">Next</a>
-                            </li>
+                            {#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a>#}
+                            {#                            </li>#}
+                            {#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item active" {aria-current="page"}><a#}
+                            {#                                    class="page-link" href="#">3</a></li>#}
+                            {#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a>#}
+                            {#                            </li>#}
+                            {#                            <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a>#}
+                            {#                            </li>#}
+                            {% if books.has_next %}
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
+                                                                                        href="{{ url_for('shop_list', page_num=books.next_num) }}">Next</a>
+                                </li>
+                            {% else %}
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link"
+                                                                                        href="#">Next</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -884,10 +898,13 @@
                                  aria-labelledby="widgetHeadingOne" data-parent="#widgetAccordion">
                                 <ul class="product-categories">
                                     {% for cat in categories %}
-                                        <li class="cat-item cat-item-{{ cat.id }} ty-compact-list1"><a href="#">{{ cat.name }}</a></li>
+                                        <li class="cat-item cat-item-{{ cat.id }} ty-compact-list1"><a
+                                                href="#">{{ cat.name }}</a></li>
                                     {% endfor %}
                                 </ul>
-                                <div class="show-more1 text-danger text-center" style="display: none; cursor: pointer">Show more</div>
+                                <div class="show-more1 text-danger text-center" style="display: none; cursor: pointer">
+                                    Show more
+                                </div>
                             </div>
                         </div>
                         <div id="Authors" class="widget widget_search widget_author p-4d875 border">
@@ -929,7 +946,9 @@
                                         </li>
                                     {% endfor %}
                                 </ul>
-                                <div class="show-more text-danger text-center" style="display: none; cursor: pointer">Show more</div>
+                                <div class="show-more text-danger text-center" style="display: none; cursor: pointer">
+                                    Show more
+                                </div>
                             </div>
                         </div>
                         <div id="Price" class="widget p-4d875 border">
@@ -1207,6 +1226,31 @@
 
     {% block tail_js %}
         {{ super() }}
+        <script>
+            if ($('.ty-compact-list').length > 5) {
+                $('.ty-compact-list:gt(4)').hide();
+                $('.show-more').show();
+            }
+
+            $('.show-more').on('click', function () {
+                //toggle elements with class .ty-compact-list that their index is bigger than 2
+                $('.ty-compact-list:gt(4)').toggle();
+                //change text of show more element just for demonstration purposes to this demo
+                $(this).text() === 'Show more' ? $(this).text('Show less') : $(this).text('Show more');
+            });
+
+            if ($('.ty-compact-list1').length > 5) {
+                $('.ty-compact-list1:gt(4)').hide();
+                $('.show-more1').show();
+            }
+
+            $('.show-more1').on('click', function () {
+                //toggle elements with class .ty-compact-list that their index is bigger than 2
+                $('.ty-compact-list1:gt(4)').toggle();
+                //change text of show more element just for demonstration purposes to this demo
+                $(this).text() === 'Show more' ? $(this).text('Show less') : $(this).text('Show more');
+            });
+        </script>
     {% endblock %}
     </body>
 {% endblock %}

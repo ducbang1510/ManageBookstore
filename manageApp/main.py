@@ -15,7 +15,7 @@ def index():
 def shop_list(page_num):
     categories = utils.load_cate()
     authors = utils.load_author()
-    books = Book.query.paginate(per_page=4, page=page_num, error_out=True)
+    books = Book.query.paginate(per_page=12, page=page_num, error_out=True)
     all_pages = books.iter_pages()
 
     return render_template('shop_list.html', books=books,
