@@ -11,8 +11,27 @@ def load_author():
     return Author.query.all()
 
 
+def get_author_of_book(book_id):
+    authors = Author.query.join(BookAuthor, Author.id == BookAuthor.author_id)\
+        .filter(BookAuthor.book_id == book_id)
+    return authors.all()
+
+
+def get_book_by_id(book_id):
+    return Book.query.get(book_id)
+
+
+def load_image(cat, book_id):
+    image = Bookimage.query.join(Book, Book.id == Bookimage.book_id)\
+        .filter(Bookimage.image.contains(cat), Bookimage.book_id == book_id)
+    return image.all()
+
+
 def load_books():
-    books = Book.query
+    books = db.session.query(Book.id, Book.name, Book.description, Book.image, Book.price, Author.name.label('author'))\
+        .join(BookAuthor, BookAuthor.book_id == Book.id)\
+        .join(Author, Author.id == BookAuthor.author_id)\
+
     return books.all()
 
 
@@ -40,3 +59,25 @@ def cart_stats(cart):
         price = price + p["quantity"] * p["price"]
 
     return count, price
+
+
+def add_invoice(cart):
+    if cart:
+        try:
+            invoice = Invoice(customer_id=1)
+            db.session.add(invoice)
+
+            for p in list(cart.values()):
+                detail = DetailInvoice(book_id=int(p["id"]),
+                                       invoice_id=invoice.id,
+                                       price=float(p["price"]),
+                                       quantity=p["quantity"])
+                db.session.add(detail)
+
+            db.session.commit()
+
+            return True
+        except :
+            pass
+
+    return False

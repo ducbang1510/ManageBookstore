@@ -14,19 +14,24 @@ def index():
 @app.route("/shop-list/<int:page_num>")
 def shop_list(page_num):
     categories = utils.load_cate()
-    authors = utils.load_author()
+    author_list = utils.load_author()
+    book_list = utils.load_books()
     books = Book.query.paginate(per_page=12, page=page_num, error_out=True)
     all_pages = books.iter_pages()
 
-    return render_template('shop_list.html', books=books,
+    return render_template('shop_list.html', books=books, book_list=book_list,
                            categories=categories,
-                           authors=authors,
+                           author_list=author_list,
                            all_pages=all_pages)
 
 
-@app.route("/book-detail")
-def book_detail():
-    return render_template('book_detail.html')
+@app.route("/shop-list/book-detail/<int:book_id>")
+def book_detail(book_id):
+    book = utils.get_book_by_id(book_id=book_id)
+    authors = utils.get_author_of_book(book.id)
+    images = utils.load_image('300x452', book_id=book_id)
+
+    return render_template('book_detail.html', book=book, authors=authors, images=images)
 
 
 @app.route("/login-admin", methods=["post", "get"])
@@ -108,6 +113,27 @@ def add_to_cart():
         "total_amount": total_amount,
         "total_quantity": total_quan
     })
+
+
+@app.route("/shop-cart")
+def shop_cart():
+    return render_template('shop_cart.html')
+
+
+@app.route('/payment', methods=['get', 'post'])
+def payment():
+    if request.method == 'POST':
+        if utils.add_invoice(session.get('cart')):
+            del session['cart']
+
+            return jsonify({"message": "Payment added!!!"})
+
+    quan, price = utils.cart_stats(session.get('cart'))
+    cart_info = {
+        'total_quantity': quan,
+        'total_amount': price
+    }
+    return render_template('payment.html', cart_info=cart_info)
 
 
 if __name__ == "__main__":

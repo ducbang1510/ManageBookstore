@@ -37,7 +37,7 @@ class Book(SaleBase):
     price = Column(Float, default=0)
     categories = relationship('Category', secondary='book_cate', lazy='subquery', backref=backref('books', lazy=True))
     authors = relationship('Author', secondary='book_author', lazy='subquery', backref=backref('books', lazy=True))
-    # images = relationship('Bookimage', backref('book'), lazy=True)
+    images = relationship('Bookimage', backref=backref('books', lazy=True))
 
 
 class Bookimage(SaleBase):

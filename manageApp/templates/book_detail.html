@@ -36,28 +36,19 @@
                                         <figure class="woocommerce-product-gallery__wrapper mb-0">
                                             <div class="js-slick-carousel u-slick"
                                                  data-pagi-classes="text-center u-slick__pagination my-4">
-                                                <div class="js-slide">
-                                                    <img src="{{ url_for('static', filename='assets/img/300x452/img4.jpg') }}"
-                                                         alt="Image Description"
-                                                         class="mx-auto img-fluid">
-                                                </div>
-                                                <div class="js-slide">
-                                                    <img src="{{ url_for('static', filename='assets/img/300x452/img4.jpg') }}"
-                                                         alt="Image Description"
-                                                         class="mx-auto img-fluid">
-                                                </div>
-                                                <div class="js-slide">
-                                                    <img src="{{ url_for('static', filename='assets/img/300x452/img4.jpg') }}"
-                                                         alt="Image Description"
-                                                         class="mx-auto img-fluid">
-                                                </div>
+                                                {% for i in images %}
+                                                    <div class="js-slide">
+                                                        <img src="{{ url_for('static', filename=i.image) }}"
+                                                             alt="Image Description"
+                                                             class="mx-auto img-fluid">
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                         </figure>
                                     </div>
                                     <div class="col-lg-7 pl-lg-0 summary entry-summary">
                                         <div class="px-lg-4 px-xl-6">
-                                            <h1 class="product_title entry-title font-size-7 mb-3">Where the Crawdads
-                                                Sing</h1>
+                                            <h1 class="product_title entry-title font-size-7 mb-3">{{ book.name }}</h1>
                                             <div class="font-size-2 mb-4">
                                                 <span class="text-yellow-darker">
                                                     <span class="fas fa-star"></span>
@@ -68,7 +59,9 @@
                                                 </span>
                                                 <span class="ml-3">(3,714)</span>
                                                 <span class="ml-3 font-weight-medium">By (author)</span>
-                                                <span class="ml-2 text-gray-600">Anna Banks</span>
+                                                {% for a in authors %}
+                                                    <span class="ml-2 text-gray-600">{{ a.name }}</span>
+                                                {% endfor %}
                                             </div>
 
                                             <div class="woocommerce-product-details__short-description font-size-2 mb-4">
@@ -79,11 +72,11 @@
 
                                             <p class="price font-size-22 font-weight-medium mb-4">
                                                 <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-currencySymbol">$</span>29.95
-                                                </span> –
-                                                <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-currencySymbol">$</span>59.95
-                                                </span>
+                                                    <span class="woocommerce-Price-currencySymbol"></span>{{ book.price }}
+                                                </span> VND
+{#                                                <span class="woocommerce-Price-amount amount">#}
+{#                                                    <span class="woocommerce-Price-currencySymbol">$</span>59.95#}
+{#                                                </span>#}
                                             </p>
 
                                             <div class="mb-4">

@@ -134,7 +134,7 @@ CREATE TABLE `book_image` (
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`),
   CONSTRAINT `book_image_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,6 +143,7 @@ CREATE TABLE `book_image` (
 
 LOCK TABLES `book_image` WRITE;
 /*!40000 ALTER TABLE `book_image` DISABLE KEYS */;
+INSERT INTO `book_image` VALUES (2,'assets/img/150x226/img6.jpg',1),(3,'assets/img/150x226/img8.jpg',2),(4,'assets/img/150x226/img1.jpg',3),(5,'assets/img/150x226/img12.jpg',4),(6,'assets/img/150x226/img4.jpg',5),(7,'assets/img/150x226/img7.jpg',6),(8,'assets/img/150x226/img2.jpg',7),(9,'assets/img/150x226/img5.jpg',8),(10,'assets/img/150x226/img11.jpg',9),(11,'assets/img/150x226/img13.jpg',10),(12,'assets/img/150x226/img9.jpg',11),(13,'assets/img/150x226/img10.jpg',12),(14,'assets/img/150x226/img3.jpg',13),(15,'assets/img/300x452/img6.jpg',1),(16,'assets/img/300x452/img8.jpg',2),(17,'assets/img/300x452/img1.jpg',3),(18,'assets/img/300x452/img12.jpg',4),(19,'assets/img/300x452/img4.jpg',5),(20,'assets/img/300x452/img7.jpg',6),(21,'assets/img/300x452/img2.jpg',7),(22,'assets/img/300x452/img5.jpg',8),(23,'assets/img/300x452/img11.jpg',9),(24,'assets/img/300x452/img13.jpg',10),(25,'assets/img/300x452/img9.jpg',11),(26,'assets/img/300x452/img10.jpg',12),(27,'assets/img/300x452/img3.jpg',13);
 /*!40000 ALTER TABLE `book_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,4 +486,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-01  9:50:30
+-- Dump completed on 2020-12-04 16:26:04

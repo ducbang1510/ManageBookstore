@@ -3,7 +3,7 @@ from flask import redirect
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import BaseView, expose
 from flask_login import current_user, logout_user
-from manageApp.models import Category, Book, Author, Customer
+from manageApp.models import Category, Book, Author, Customer, Bookimage
 
 
 class AuthenticatedView(ModelView):
@@ -38,6 +38,13 @@ class CustomerModelView(AuthenticatedView):
     can_delete = False
 
 
+class BookImageModelView(AuthenticatedView):
+    column_display_pk = False
+    can_delete = True
+    can_create = True
+    can_export = True
+
+
 class ChartView(BaseView):
     @expose('/')
     def index(self):
@@ -67,6 +74,7 @@ admin.add_view(CustomerModelView(Customer, db.session))
 admin.add_view(AuthorModelView(Author, db.session))
 admin.add_view(CategoryModelView(Category, db.session))
 admin.add_view(BookModelView(Book, db.session))
+admin.add_view(BookImageModelView(Bookimage, db.session))
 admin.add_view(ChartView(name='Biểu đồ'))
 admin.add_view(ContactView(name='Liên hệ'))
 admin.add_view(LogOutView(name="Đăng xuất"))

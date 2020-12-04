@@ -136,7 +136,7 @@
                                 <li><a href="{{ url_for('shop_list', page_num=1) }}" class="dropdown-item link-black-100">Danh sách
                                     sản phẩm</a></li>
                                 <li class="position-relative">
-                                    <a id="shopDropdownsubmenutwoInvoker" href="{{ url_for('book_detail') }}"
+                                    <a id="shopDropdownsubmenutwoInvoker" href="{{ url_for('book_detail', book_id = 1) }}"
                                        class="dropdown-toggle dropdown-item dropdown-item__sub-menu link-black-100 d-flex align-items-center justify-content-between"
                                        aria-haspopup="true"
                                        aria-expanded="false"
@@ -156,7 +156,7 @@
                                                class="dropdown-item link-black-100">Shop Single v1</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="../shop/cart.html" class="dropdown-item link-black-100">Giỏ hàng</a></li>
+                                <li><a href="{{ url_for('shop_cart') }}" class="dropdown-item link-black-100">Giỏ hàng</a></li>
                                 <li><a href="../shop/checkout.html" class="dropdown-item link-black-100">Thanh toán</a>
                                 </li>
                                 <li><a href="../shop/my-account.html" class="dropdown-item link-black-100">Tài khoản của
@@ -266,7 +266,7 @@
                                 <i class="glph-icon flaticon-loupe input-group-text py-2d75 bg-white-100 border-white-100"></i>
                             </div>
                             <input class="form-control bg-white-100 min-width-380 py-2d75 height-4 border-white-100"
-                                   type="search" placeholder="Search for Books by Keyword ..." aria-label="Search">
+                                   type="search" placeholder="Tìm kiếm bằng từ khóa ..." aria-label="Search">
                         </div>
                         <button class="btn btn-outline-success my-2 my-sm-0 sr-only" type="submit">Search</button>
                     </form>
